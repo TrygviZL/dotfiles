@@ -7,7 +7,10 @@ set guioptions-=b
 
 nnoremap <c-z> <nop>
 
-:set guifont=Consolas:h12
+:set guifont=Consolas:h11
+
+set shell=C:\Users\trlk\AppData\Local\Programs\Git\bin\bash.exe
+set splitbelow
 
 "windows like stuff
 :smap <Del> <C-g>"_d
@@ -21,8 +24,15 @@ nnoremap <c-z> <nop>
 " set the backspace to delete normally
 set backspace=indent,eol,start
 
+" store backup, undo, and swap files in temp directory
+set directory=$HOME/temp//
+set backupdir=$HOME/temp//
+set undodir=$HOME/temp//
+
 " set start directory
-:cd C:\Users\trygv\Documents\GitHub
+:cd C:\Users\trlk\GitHub
+
+let g:minimap_highlight='Visual'
 
 "Use built-in tab style instead of GUI
 set guioptions-=e
@@ -46,6 +56,9 @@ Plug 'preservim/nerdtree'
 Plug 'preservim/nerdtree'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'severin-lemaignan/vim-minimap'
 
 Plug 'pangloss/vim-javascript'    " JavaScript support
 Plug 'leafgarland/typescript-vim' " TypeScript syntax
@@ -71,7 +84,7 @@ syntax on
 "At the bottom, display whether you are in command mode or insert mode
 set showmode
 
-colorscheme codedark
+colorscheme onedark
 
 set showcmd
 
@@ -113,6 +126,10 @@ set ignorecase
 
 "The width of the tab key
 set tabstop=2
+
+"relative line number
+set relativenumber
+set rnu
 
 "Uniform indent to 2
 set softtabstop=2
