@@ -1,44 +1,21 @@
-set splitbelow
+
+" ========== Remove Gui ============
+
 set guioptions-=T
 set guioptions-=m
 set guioptions-=L
 set guioptions-=r
 set guioptions-=b
 
-nnoremap <c-z> <nop>
-
+" ========= Font options ===========
 :set guifont=Consolas:h11
 
-set shell=C:\Users\trlk\AppData\Local\Programs\Git\bin\bash.exe
-set splitbelow
-
-"windows like stuff
-:smap <Del> <C-g>"_d
-:smap <C-c> <C-g>y
-:smap <C-x> <C-g>x
-:imap <C-v> <Esc>pi
-:smap <C-v> <C-g>p
-:smap <Tab> <C-g>1> 
-:smap <S-Tab> <C-g>1<
-
-" set the backspace to delete normally
-set backspace=indent,eol,start
-
-" store backup, undo, and swap files in temp directory
-set directory=$HOME/temp//
-set backupdir=$HOME/temp//
-set undodir=$HOME/temp//
-
+"========== Paths ==================
+" set shell=C:/Program\ Files/Git/bin/bash.exe
 " set start directory
-:cd C:\Users\trlk\GitHub
+:cd C:\Users\trygv\Documents\GitHub
 
-let g:minimap_highlight='Visual'
-
-"Use built-in tab style instead of GUI
-set guioptions-=e
-set nolist
-
-"Plugins
+" ========= Plugins ==================
 autocmd VimEnter * NERDTree
 let g:airline_theme = 'deus'
 inoremap <silent><expr> <c-space> coc#refresh()
@@ -46,19 +23,18 @@ inoremap <silent><expr> <c-space> coc#refresh()
 " Specify a directory for plugins
 " - For Neovim: stdpath('data') . '/plugged'
 " - Avoid using standard Vim directory names like 'plugin'
-call plug#begin('C:/Program\ Files\ (x86)/Vim/vim82/pack/vendor/start')
+call plug#begin('C:\Users\trygv\Vim\vim82\pack\vendor')
 
 " Make sure you use single quotes
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'preservim/nerdtree'
-Plug 'preservim/nerdtree'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'severin-lemaignan/vim-minimap'
+Plug 'neoclide/coc-eslint'
 
 Plug 'pangloss/vim-javascript'    " JavaScript support
 Plug 'leafgarland/typescript-vim' " TypeScript syntax
@@ -74,9 +50,46 @@ call plug#end()
 
 let g:coc_global_extensions = ['coc-tsserver']
 
-" set listchars=tab:?\ ,eol:?,trail:·,extends:>,precedes:<
+" ============== Set <K> hover options ========
+nnoremap <silent> K :call CocAction('doHover')<CR>
+function! ShowDocIfNoDiagnostic(timer_id)
+  if (coc#float#has_float() == 0 && CocHasProvider('hover') == 1)
+    silent call CocActionAsync('doHover')
+  endif
+endfunction
 
+function! s:show_hover_doc()
+  call timer_start(500, 'ShowDocIfNoDiagnostic')
+endfunction
+
+autocmd CursorHoldI * :call <SID>show_hover_doc()
+autocmd CursorHold * :call <SID>show_hover_doc()
+
+" =========== Misc options =========
+" Activate eslint if exists in node_modules
+if isdirectory('./node_modules') && isdirectory('./node_modules/eslint')
+  let g:coc_global_extensions += ['coc-eslint']
+endif
+
+set splitbelow
+
+" remove c-z
+nnoremap <c-z> <nop>
+
+" set the backspace to delete normally
+set backspace=indent,eol,start
+
+" store backup, undo, and swap files in temp directory
+set nobackup
+
+"Use built-in tab style instead of GUI
+set guioptions-=e
+set nolist
+
+" show NerdTree
 let NERDTreeShowHidden=1
+
+:set guioptions+=a
 
 "Turn on grammar"
 syntax on
