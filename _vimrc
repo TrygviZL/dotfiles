@@ -144,6 +144,11 @@ set tabstop=2
 set relativenumber
 set rnu
 
+" set encoding
+:set nolist
+:set encoding=utf-8
+:set termencoding=utf-8
+
 "Uniform indent to 2
 set softtabstop=2
 set shiftwidth=2
