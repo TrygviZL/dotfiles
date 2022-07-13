@@ -1,166 +1,165 @@
-
-" ========== Remove Gui ============
-
 set guioptions-=T
 set guioptions-=m
 set guioptions-=L
 set guioptions-=r
 set guioptions-=b
 
-" ========= Font options ===========
-:set guifont=Consolas:h11
-
-"========== Paths ==================
-" set shell=C:/Program\ Files/Git/bin/bash.exe
-" set start directory
-:cd C:\Users\trygv\Documents\GitHub
-
-" ========= Plugins ==================
-autocmd VimEnter * NERDTree
-let g:airline_theme = 'deus'
-inoremap <silent><expr> <c-space> coc#refresh()
-
-" Specify a directory for plugins
-" - For Neovim: stdpath('data') . '/plugged'
-" - Avoid using standard Vim directory names like 'plugin'
-call plug#begin('C:\Users\trygv\Vim\vim82\pack\vendor')
-
-" Make sure you use single quotes
-
+call plug#begin('~/.vim/plugged')
+Plug 'w0rp/ale'
+Plug 'airblade/vim-gitgutter'
+Plug 'rafi/awesome-vim-colorschemes'
+Plug 'pangloss/vim-javascript'
+Plug 'leafgarland/typescript-vim'
+Plug 'maxmellon/vim-jsx-pretty'
+Plug 'neoclide/coc-eslint'
+Plug 'preservim/nerdtree'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'preservim/nerdtree'
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-Plug 'neoclide/coc-eslint'
-
-Plug 'pangloss/vim-javascript'    " JavaScript support
-Plug 'leafgarland/typescript-vim' " TypeScript syntax
-Plug 'maxmellon/vim-jsx-pretty'   " JS and JSX synta
-
-Plug 'rafi/awesome-vim-colorschemes'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
-Plug 'tomasiser/vim-code-dark'
-
-" Initialize plugin system
 call plug#end()
 
+autocmd VimEnter * NERDTree
+let NERDTreeShowHidden=1
+
+colorscheme onedark
 let g:coc_global_extensions = ['coc-tsserver']
 
-" ============== Set <K> hover options ========
-nnoremap <silent> K :call CocAction('doHover')<CR>
-function! ShowDocIfNoDiagnostic(timer_id)
-  if (coc#float#has_float() == 0 && CocHasProvider('hover') == 1)
-    silent call CocActionAsync('doHover')
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
+let g:typescript_compiler_binary = 'tsc'
+let g:typescript_compiler_options = ''
+
+" ========== Airline icons =======
+" air-line
+let g:airline_powerline_fonts = 1
+
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+
+" unicode symbols
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = ' '
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.whitespace = 'Ξ'
+
+" ======= set hover options ======
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
   endif
 endfunction
 
-function! s:show_hover_doc()
-  call timer_start(500, 'ShowDocIfNoDiagnostic')
-endfunction
-
-autocmd CursorHoldI * :call <SID>show_hover_doc()
-autocmd CursorHold * :call <SID>show_hover_doc()
-
-" =========== Misc options =========
-" Activate eslint if exists in node_modules
-if isdirectory('./node_modules') && isdirectory('./node_modules/eslint')
-  let g:coc_global_extensions += ['coc-eslint']
-endif
-
-set splitbelow
-
-" remove c-z
-nnoremap <c-z> <nop>
-
-" set the backspace to delete normally
-set backspace=indent,eol,start
-
-" store backup, undo, and swap files in temp directory
-set nobackup
-
-"Use built-in tab style instead of GUI
-set guioptions-=e
-set nolist
-
-" show NerdTree
-let NERDTreeShowHidden=1
-
-:set guioptions+=a
-
-"Turn on grammar"
-syntax on
-
-"At the bottom, display whether you are in command mode or insert mode
-set showmode
-
-colorscheme onedark
-
-set showcmd
-
-"Mouse is supported
-set mouse=a
-
-"Enable 256 colors
-set t_Co=256
-
-"When you press enter, the indent of the next line will automatically keep up with the indent of the next line
-set autoindent
-
-"This setting automatically turns tab to a space because the tab key indents differently in different editors
+set nocompatible
+" allow unsaved background buffers and remember marks/undo for them
+set hidden
+" remember more commands and search history
+set history=10000
 set expandtab
-
-"Display line number"
-set number
-
-"The current line of the cursor is highlighted"
-set cul
-
-"Auto fold", that is, the line that is too long is divided into several lines
-set wrap
-
-"Display the current position of the cursor in the status bar (in which row and which column)
-set ruler
-
-"When the cursor encounters parentheses, square brackets, and braces, it will automatically highlight another corresponding parenthesis, square bracket, and brace
-set showmatch
-
-"When searching, highlight the matching results
-set hlsearch
-
-"When you enter a search pattern, each character will automatically jump to the first matching result
-set incsearch
-
-"Ignore case when searching
-set ignorecase
-
-"The width of the tab key
 set tabstop=2
-
-"relative line number
-set relativenumber
-set rnu
-
-" set encoding
-:set nolist
-:set encoding=utf-8
-:set termencoding=utf-8
-
-"Uniform indent to 2
-set softtabstop=2
 set shiftwidth=2
+set softtabstop=2
+set autoindent
+set laststatus=2
+set showmatch
+set incsearch
+set hlsearch
+" make searches case-sensitive only if they contain upper-case characters
+set ignorecase smartcase
+" highlight current line
+set cursorline
+set cmdheight=1
+set switchbuf=useopen
+" Always show tab bar at the top
+set showtabline=2
+set winwidth=79
+" This makes RVM work inside Vim. I have no idea why.
+set shell=bash
+" Prevent Vim from clobbering the scrollback buffer. See
+" http://www.shallowsky.com/linux/noaltscreen.html
+" set t_ti= t_te=
+" keep more context when scrolling off the end of a buffer
+set scrolloff=3
+" Don't make backups at all
+set nobackup
+set nowritebackup
+set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+" allow backspacing over everything in insert mode
+set backspace=indent,eol,start
+" display incomplete commands
+set showcmd
+" Enable highlighting for syntax
+syntax on
+" Enable file type detection.
+" Use the default filetype settings, so that mail gets 'tw' set to 72,
+" 'cindent' is on in C files, etc.
+" Also load indent files, to automatically do language-dependent indenting.
+filetype plugin indent on
+" use emacs-style tab completion when selecting files, etc
+set wildmode=longest,list
+" make tab completion for files/buffers act like bash
+set wildmenu
+let mapleader=","
+" Fix slow O inserts
+:set timeout timeoutlen=1000 ttimeoutlen=100
+" Normally, Vim messes with iskeyword when you open a shell file. This can
+" leak out, polluting other file types even after a 'set ft=' change. This
+" variable prevents the iskeyword change so it can't hurt anyone.
+let g:sh_noisk=1
+" Modelines (comments that set vim options on a per-file basis)
+set modeline
+set modelines=3
+" Turn folding off for real, hopefully
+set foldmethod=manual
+set nofoldenable
+" Insert only one space when joining lines that contain sentence-terminating
+" punctuation like `.`.
+set nojoinspaces
+" If a file is changed outside of vim, automatically reload it without asking
+set autoread
+" Use the old vim regex engine (version 1, as opposed to version 2, which was
+" introduced in Vim 7.3.969). The Ruby syntax highlighting is significantly
+" slower with the new regex engine.
+set re=1
+" Stop SQL language files from doing unholy things to the C-c key
+let g:omni_sql_no_default_maps = 1
+" Diffs are shown side-by-side not above/below
+set diffopt=vertical
+" Always show the sign column
+set signcolumn=no
+" True color mode! (Requires a fancy modern terminal, but iTerm works.)
+:set termguicolors
+" Write swap files to disk and trigger CursorHold event faster (default is
+" after 4000 ms of inactivity)
+:set updatetime=200
+" Completion options.
+"   menu: use a popup menu
+"   preview: show more info in menu
+:set completeopt=menu,preview
+:set statusline=%<%f\ (%{&ft})\ %-4(%m%)%=%-19(%3l,%02c%03V%)
 
-filetype plugin on
-filetype indent on
+" Use persistent undo history.
+if !isdirectory("/tmp/.vim-undo-dir")
+    call mkdir("/tmp/.vim-undo-dir", "", 0700)
+		endif
+		set undodir=/tmp/.vim-undo-dir
+		set undofile
 
-" So we don't have to press shift when we want to get into command mode.
-nnoremap ; :
-vnoremap ; :
-
-" bindings for easy split nav
+" Easier nevigation between splits
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
