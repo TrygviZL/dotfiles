@@ -5,51 +5,48 @@ set guioptions-=r
 set guioptions-=b
 
 call plug#begin('~/.vim/plugged')
-Plug 'w0rp/ale'
+" some fuzzy finding
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
+" nice statusline
+Plug 'itchyny/vim-gitbranch'
+Plug 'itchyny/lightline.vim'
+Plug 'tpope/vim-fugitive'
+
+" git indication on lines
 Plug 'airblade/vim-gitgutter'
+
+" love me some colours
 Plug 'rafi/awesome-vim-colorschemes'
+
+" language support for TS
 Plug 'pangloss/vim-javascript'
 Plug 'leafgarland/typescript-vim'
-Plug 'maxmellon/vim-jsx-pretty'
 Plug 'neoclide/coc-eslint'
-Plug 'preservim/nerdtree'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+
+" File explorer
+Plug 'preservim/nerdtree'
 call plug#end()
 
 autocmd VimEnter * NERDTree
 let NERDTreeShowHidden=1
 
-colorscheme onedark
+colorscheme oceanic_material
 let g:coc_global_extensions = ['coc-tsserver']
-
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
 let g:typescript_compiler_binary = 'tsc'
 let g:typescript_compiler_options = ''
 
-" ========== Airline icons =======
-" air-line
-let g:airline_powerline_fonts = 1
-
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
-
-" unicode symbols
-let g:airline_left_sep = '»'
-let g:airline_left_sep = '▶'
-let g:airline_right_sep = '«'
-let g:airline_right_sep = '◀'
-let g:airline_symbols.linenr = '␊'
-let g:airline_symbols.linenr = '␤'
-let g:airline_symbols.linenr = ' '
-let g:airline_symbols.branch = '⎇'
-let g:airline_symbols.paste = 'ρ'
-let g:airline_symbols.paste = 'Þ'
-let g:airline_symbols.paste = '∥'
-let g:airline_symbols.whitespace = 'Ξ'
+let g:lightline = {
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'gitbranch#name'
+      \ },
+      \ }
 
 " ======= set hover options ======
 " Use K to show documentation in preview window
@@ -63,7 +60,14 @@ function! s:show_documentation()
   endif
 endfunction
 
+" Easier nevigation between splits
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
 set nocompatible
+set nu
 " allow unsaved background buffers and remember marks/undo for them
 set hidden
 " remember more commands and search history
@@ -139,8 +143,6 @@ set re=1
 let g:omni_sql_no_default_maps = 1
 " Diffs are shown side-by-side not above/below
 set diffopt=vertical
-" Always show the sign column
-set signcolumn=no
 " True color mode! (Requires a fancy modern terminal, but iTerm works.)
 :set termguicolors
 " Write swap files to disk and trigger CursorHold event faster (default is
@@ -155,12 +157,6 @@ set signcolumn=no
 " Use persistent undo history.
 if !isdirectory("/tmp/.vim-undo-dir")
     call mkdir("/tmp/.vim-undo-dir", "", 0700)
-		endif
-		set undodir=/tmp/.vim-undo-dir
-		set undofile
-
-" Easier nevigation between splits
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
+endif
+set undodir=/tmp/.vim-undo-dir
+set undofile
