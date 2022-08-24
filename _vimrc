@@ -103,6 +103,8 @@ set laststatus=2
 set showmatch
 set incsearch
 set hlsearch
+" new splits below by default
+set splitbelow
 :set mouse=a
 " make searches case-sensitive only if they contain upper-case characters
 set ignorecase smartcase
