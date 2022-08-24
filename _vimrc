@@ -6,8 +6,7 @@ set guioptions-=b
 
 call plug#begin('~/.vim/plugged')
 " some fuzzy finding
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 
 " nice statusline
 Plug 'itchyny/vim-gitbranch'
@@ -27,18 +26,35 @@ Plug 'neoclide/coc-eslint'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " File explorer
-Plug 'preservim/nerdtree'
+Plug 'preservim/nerdtree' |
+            \ Plug 'Xuyuanp/nerdtree-git-plugin'
 call plug#end()
 
-autocmd VimEnter * NERDTree
-let NERDTreeShowHidden=1
+colorscheme onedark
 
-colorscheme oceanic_material
-let g:coc_global_extensions = ['coc-tsserver']
+let g:coc_global_extensions = ['coc-tsserver', 'coc-eslint']
 let g:typescript_compiler_binary = 'tsc'
 let g:typescript_compiler_options = ''
 
+" ================= NERDTREE ================= 
+autocmd VimEnter * NERDTree
+let NERDTreeShowHidden=1
+let g:NERDTreeGitStatusIndicatorMapCustom = {
+                \ 'Modified'  :'✹',
+                \ 'Staged'    :'✚',
+                \ 'Untracked' :'✭',
+                \ 'Renamed'   :'➜',
+                \ 'Unmerged'  :'═',
+                \ 'Deleted'   :'✖',
+                \ 'Dirty'     :'✗',
+                \ 'Ignored'   :'☒',
+                \ 'Clean'     :'✔︎',
+                \ 'Unknown'   :'?',
+                \ }
+" ==================== LIGHTLINE ================
+
 let g:lightline = {
+      \ 'colorscheme': 'one',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
@@ -59,6 +75,12 @@ function! s:show_documentation()
     call CocAction('doHover')
   endif
 endfunction
+
+" Uncomment the following to have Vim jump to the last position when
+" reopening a file
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
 
 " Easier nevigation between splits
 nnoremap <C-h> <C-w>h
@@ -81,6 +103,7 @@ set laststatus=2
 set showmatch
 set incsearch
 set hlsearch
+:set mouse=a
 " make searches case-sensitive only if they contain upper-case characters
 set ignorecase smartcase
 " highlight current line
@@ -135,6 +158,16 @@ set nofoldenable
 set nojoinspaces
 " If a file is changed outside of vim, automatically reload it without asking
 set autoread
+" Triger `autoread` when files changes on disk
+" https://unix.stackexchange.com/questions/149209/refresh-changed-content-of-file-opened-in-vim/383044#383044
+" https://vi.stackexchange.com/questions/13692/prevent-focusgained-autocmd-running-in-command-line-editing-mode
+    autocmd FocusGained,BufEnter,CursorHold,CursorHoldI *
+            \ if mode() !~ '\v(c|r.?|!|t)' && getcmdwintype() == '' | checktime | endif
+
+" Notification after file change
+" https://vi.stackexchange.com/questions/13091/autocmd-event-for-autoread
+autocmd FileChangedShellPost *
+  \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 " Use the old vim regex engine (version 1, as opposed to version 2, which was
 " introduced in Vim 7.3.969). The Ruby syntax highlighting is significantly
 " slower with the new regex engine.
@@ -160,3 +193,6 @@ if !isdirectory("/tmp/.vim-undo-dir")
 endif
 set undodir=/tmp/.vim-undo-dir
 set undofile
+" Don't syntax highlight markdown because it's often wrong
+autocmd! FileType mkd setlocal syn=off
+autocmd! BufNewFile,BufRead *.md setlocal ft=
