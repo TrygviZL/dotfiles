@@ -1,2 +1,2 @@
-# my_vimrc
-Simply my current vimrc file
+# my-dofiles
+Assorted dotfiles
