@@ -8,6 +8,12 @@ call plug#begin('~/.vim/plugged')
 " some fuzzy finding
 Plug 'ctrlpvim/ctrlp.vim'
 
+" Terraform support
+Plug 'hashivim/vim-terraform'
+
+" Jinja support
+Plug 'lepture/vim-jinja' 
+
 " nice statusline
 Plug 'itchyny/vim-gitbranch'
 Plug 'itchyny/lightline.vim'
@@ -202,3 +208,11 @@ set undofile
 " Don't syntax highlight markdown because it's often wrong
 autocmd! FileType mkd setlocal syn=off
 autocmd! BufNewFile,BufRead *.md setlocal ft=
+" Automatic closing brackets
+inoremap " ""<left>
+inoremap ' ''<left>
+inoremap ( ()<left>
+inoremap [ []<left>
+inoremap { {}<left>
+inoremap {<CR> {<CR>}<ESC>O
+inoremap {;<CR> {<CR>};<ESC>O
