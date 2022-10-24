@@ -37,7 +37,7 @@ Plug 'preservim/nerdtree' |
 
 call plug#end()
 
-colorscheme one
+colorscheme onedark
 set background=dark
 
 let g:coc_global_extensions = ['coc-tsserver', 'coc-eslint']
