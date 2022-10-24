@@ -1,4 +1,17 @@
 {
+  "languageserver": {
+    "terraform": {
+      "command": "terraform-ls",
+      "args": ["serve"],
+      "filetypes": [
+        "terraform",
+        "tf"
+      ],
+      "trace.server": "verbose",
+      "initializationOptions": {},
+      "settings": {}
+    }
+  },
   "eslint.autoFixOnSave": true,
-  "eslint.filetypes": ["javascript", "javascriptreact", "typescript", "typescriptreact"]
+  "eslint.filetypes": ["javascript", "typescript", "terraform"]
 }
