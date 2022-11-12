@@ -8,6 +8,9 @@ call plug#begin('~/.vim/plugged')
 " some fuzzy finding
 Plug 'ctrlpvim/ctrlp.vim'
 
+" Go language support
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
 " Terraform support
 Plug 'hashivim/vim-terraform'
 
