@@ -34,3 +34,12 @@ mv coc-settings.json $HOME/.vim
 
 # install plugins 
 vim +PlugInstall
+
+# install fish-shell
+sudo apt-add-repository ppa:fish-shell/release-2
+sudo apt-get update
+sudo apt-get install fish
+
+# install oh-my-fish and set theme
+curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
+omf theme default
