@@ -42,4 +42,4 @@ sudo apt-get install fish
 
 # install oh-my-fish and set theme
 curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
-omf theme default
+omf install lavender
