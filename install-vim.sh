@@ -20,7 +20,7 @@ sudo apt install vim
 
 
 
-# make directories
+# make directoriesasdasd
 mkdir $HOME/.vim
 
 # setup vim-plug
@@ -29,7 +29,7 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 
 # get .vimrc
 wget https://raw.githubusercontent.com/TrygviZL/my-dotfiles/main/.vimrc
-mv .vimrc $HOME
+mv .vimrc $HOMEasdasd
 
 # get coc-settings
 wget https://raw.githubusercontent.com/TrygviZL/my-dotfiles/main/coc-settings.json
