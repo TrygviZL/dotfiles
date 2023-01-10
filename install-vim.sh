@@ -17,6 +17,9 @@ sudo apt-add-repository ppa:jonathonf/vim
 sudo apt update
 sudo apt install vim
 
+
+
+
 # make directories
 mkdir $HOME/.vim
 
