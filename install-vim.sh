@@ -2,7 +2,6 @@
 
 set -o errexit
 set -o nounset
-set -o pipefail
 
 sudo apt-get update
 
@@ -18,7 +17,8 @@ sudo apt update
 sudo apt install vim
 
 
-
+# install nodejs
+sudo apt install nodejs
 
 # make directories
 mkdir $HOME/.vim
