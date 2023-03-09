@@ -25,7 +25,7 @@ mkdir $HOME/.vim
 
 # setup vim-plug
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-      https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 # get .vimrc
 wget https://raw.githubusercontent.com/TrygviZL/my-dotfiles/main/.vimrc
