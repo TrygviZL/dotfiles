@@ -46,3 +46,15 @@ sudo apt-get install fish
 # install oh-my-fish and set theme
 curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
 omf install lavender
+
+# install aws cli
+sudo apt install unzip
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+
+# install pip and dbt
+sudo apt install python3-pip
+pip install dbt-core dbt-snowflake
+
+
