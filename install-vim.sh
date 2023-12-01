@@ -20,6 +20,7 @@ sudo apt remove vim
 sudo apt autoclean && sudo apt autoremove
 
 # get latest version from ppa repo
+sudo apt-get install software-properties-common
 sudo apt-add-repository ppa:jonathonf/vim
 
 # update and install vim
